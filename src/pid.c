@@ -17,9 +17,9 @@ void pid_init(pid_controller_t *pid, float kp, float ki, float kd, float dt)
     ESP_LOGI(TAG, "PID initialized: kp=%.4f, ki=%.4f, kd=%.4f", kp, ki, kd);
 }
 
-float pid_update(pid_controller_t *pid, float target, float measured)
+float pid_update(pid_controller_t *pid, float setpoint, float feedback)
 {
-    float error = target - measured;
+    float error = setpoint - feedback;
     pid->integral += error * pid->dt;
     float derivative = (error - pid->prev_error) / pid->dt;
     pid->prev_error = error;
@@ -29,7 +29,7 @@ float pid_update(pid_controller_t *pid, float target, float measured)
         pid->ki * pid->integral +
         pid->kd * derivative;
 
-    ESP_LOGD(TAG, "target: %f, measured: %f, error: %f, output: %f", target, measured, error, output);
+    ESP_LOGD(TAG, "setpoint: %f, feedback: %f, error: %f, output: %f", setpoint, feedback, error, output);
 
     return output;
 }
