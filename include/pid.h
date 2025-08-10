@@ -6,6 +6,7 @@ typedef struct
     float kp;
     float ki;
     float kd;
+    float kf;
 
     float dt;
 
@@ -13,7 +14,7 @@ typedef struct
     float prev_feedback;
 } pid_controller_t;
 
-void pid_init(pid_controller_t *pid, float kp, float ki, float kd, float dt);
-float pid_update(pid_controller_t *pid, float setpoint, float feedback);
+void pid_init(pid_controller_t *pid, float kp, float ki, float kd, float kf, float dt);
+float pid_update(pid_controller_t *pid, float setpoint, float feedback, float feedforward);
 
 #endif // PID_H
