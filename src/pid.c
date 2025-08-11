@@ -13,7 +13,7 @@ void pid_init(pid_controller_t *pid, float kp, float ki, float kd, float kf, flo
     pid->dt = dt;
 
     pid->integral = 0.0f;
-    pid->prev_feedback = 0.0f;
+    pid->prev_error = 0.0f;
 
     ESP_LOGI(TAG, "PID initialized: kp=%f, ki=%f, kd=%f, kf=%f, dt=%f", kp, ki, kd, kf, dt);
 }
@@ -22,8 +22,8 @@ float pid_update(pid_controller_t *pid, float setpoint, float feedback, float fe
 {
     float error = setpoint - feedback;
     pid->integral += error * pid->dt;
-    float derivative = -(feedback - pid->prev_feedback) / pid->dt;
-    pid->prev_feedback = feedback;
+    float derivative = -(error - pid->prev_error) / pid->dt;
+    pid->prev_error = error;
 
     float output =
         pid->kp * error +

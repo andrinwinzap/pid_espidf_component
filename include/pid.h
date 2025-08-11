@@ -11,7 +11,7 @@ typedef struct
     float dt;
 
     float integral;
-    float prev_feedback;
+    float prev_error;
 } pid_controller_t;
 
 void pid_init(pid_controller_t *pid, float kp, float ki, float kd, float kf, float dt);
