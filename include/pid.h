@@ -8,13 +8,14 @@ typedef struct
     float kd;
     float kf;
 
+    float output_max;
     float dt;
 
     float integral;
     float prev_error;
 } pid_controller_t;
 
-void pid_init(pid_controller_t *pid, float kp, float ki, float kd, float kf, float dt);
+void pid_init(pid_controller_t *pid, float kp, float ki, float kd, float kf, float output_max, float dt);
 float pid_update(pid_controller_t *pid, float setpoint, float feedback, float feedforward);
 
 #endif // PID_H
